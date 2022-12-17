@@ -1,10 +1,7 @@
 package jsvariedades.sales.controller.v1;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RequestMapping("/api/v1/auth")
 public interface AuthController {
