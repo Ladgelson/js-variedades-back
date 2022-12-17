@@ -2,7 +2,7 @@ server:
   port: 8081
   servlet:
     contextPath: '/'
-    application-display-name: 'mini-agro-backend'
+    application-display-name: 'js-variedades-backend'
 
 springdoc:
   swagger-ui:
