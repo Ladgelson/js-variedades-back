@@ -47,6 +47,6 @@ public class BaseModel implements Serializable {
 
     @PreUpdate
     public void updateLastUpdatedDate() {
-        this.dateModel.setLastUpdatedDate(LocalDateTime.now(TimeZones.getDefault()));
+        this.dateModel.setUpdatedDate(LocalDateTime.now(TimeZones.getDefault()));
     }
 }

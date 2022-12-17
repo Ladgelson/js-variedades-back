@@ -33,11 +33,11 @@ public class DateModel implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public LocalDateTime getLastUpdatedDate() {
+    public LocalDateTime getUpdatedDate() {
         return this.updatedDate;
     }
 
-    public void setLastUpdatedDate(LocalDateTime updatedDate) {
+    public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
     }
 }
