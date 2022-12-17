@@ -61,7 +61,7 @@ public interface SaleController {
     @PostMapping("/{id}/reset")
     ResponseEntity<?> resetSale(@PathVariable int id);
 
-    @Operation(description = "Finalize a Sale")
+    @Operation(description = "Finish a Sale")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sale finished", content = @Content),
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
