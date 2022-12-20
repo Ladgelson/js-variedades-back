@@ -1,21 +1,20 @@
 package jsvariedades.sales.model;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 import jsvariedades.sales.util.TimeZones;
-import org.springframework.data.annotation.Id;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@MappedSuperclass
 public class BaseModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 4769823595867830152L;
+
     @Id
     @GeneratedValue
+    @Column(nullable = false, name = "id")
     private Long id;
     @Embedded
     private DateModel dateModel;
