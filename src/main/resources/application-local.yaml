@@ -12,10 +12,15 @@ springdoc:
     enabled: true
 
 spring:
+  flyway:
+    url: jdbc:mysql://localhost:3307/jsvariedades
+    password: jsvariedades
+    user: root
+    locations: classpath:db/migration
   datasource:
-    url: jdbc:mysql://localhost:3306/jsvariedades
+    url: jdbc:mysql://localhost:3307/jsvariedades
     username: root
-    password: pass_platform_login
+    password: jsvariedades
   jpa:
     hibernate:
       ddl-auto: update
