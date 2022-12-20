@@ -4,13 +4,18 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class DateModel implements Serializable {
     @Serial
     private static final long serialVersionUID = -8379140358162252399L;
+
+    @Column(nullable = false, name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(nullable = false, name = "updated_date")
     private LocalDateTime updatedDate;
 
     public DateModel() {
