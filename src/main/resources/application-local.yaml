@@ -1,17 +1,6 @@
-server:
-  port: 8081
-  servlet:
-    contextPath: '/'
-    application-display-name: 'js-variedades-backend'
-
-springdoc:
-  swagger-ui:
-    enabled: true
-    url: /v3/api-docs
-  api-docs:
-    enabled: true
-
 spring:
+  application:
+    name: jsvariedades
   flyway:
     url: jdbc:mysql://localhost:3307/jsvariedades
     password: jsvariedades
