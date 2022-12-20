@@ -1,11 +1,6 @@
 spring:
   application:
     name: jsvariedades
-  flyway:
-    url: jdbc:mysql://localhost:3307/jsvariedades
-    password: jsvariedades
-    user: root
-    locations: classpath:db/migration
   datasource:
     url: jdbc:mysql://localhost:3307/jsvariedades
     username: root
