@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 @Table(name = "Role")
 public class Role extends BaseModel{
 
-    @Column(nullable = false, name = "role_name")
-    private String roleName;
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private RoleType roleName;
 
     public Role(){}
 
