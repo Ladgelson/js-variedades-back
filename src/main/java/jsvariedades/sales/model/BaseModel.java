@@ -26,16 +26,8 @@ public class BaseModel implements Serializable {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public DateModel getDateModel() {
         return this.dateModel;
-    }
-
-    public void setDateModel(DateModel dateModel) {
-        this.dateModel = dateModel;
     }
 
     @PrePersist
