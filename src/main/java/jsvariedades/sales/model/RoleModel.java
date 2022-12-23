@@ -1,26 +1,27 @@
 package jsvariedades.sales.model;
 
 import jakarta.persistence.*;
+import jsvariedades.sales.enums.RoleType;
 
 @Entity
 @Table(name = "Role")
-public class Role extends BaseModel{
+public class RoleModel extends BaseModel{
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private RoleType roleName;
 
-    public Role(){}
+    public RoleModel(){}
 
-    public Role(String roleName) {
+    public RoleModel(RoleType roleName) {
         this.roleName = roleName;
     }
 
-    public String getRoleName() {
+    public RoleType getRoleName() {
         return roleName;
     }
 
-    public Role setRoleName(String roleName) {
+    public RoleModel setRoleName(RoleType roleName) {
         this.roleName = roleName;
         return this;
     }
