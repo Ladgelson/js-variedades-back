@@ -3,10 +3,11 @@ package jsvariedades.sales.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jsvariedades.sales.model.base.BaseModel;
 
 @Entity
-@Table(name = "Company")
-public class CompanyModel extends BaseModel{
+@Table(name = "tb_company")
+public class CompanyModel extends BaseModel {
 
     @Column(nullable = false)
     private String name;

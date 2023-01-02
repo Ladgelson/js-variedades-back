@@ -1,9 +1,10 @@
 package jsvariedades.sales.model;
 
 import jakarta.persistence.*;
+import jsvariedades.sales.model.base.BaseModel;
 
 @Entity
-@Table(name = "User")
+@Table(name = "tb_user")
 public class UserModel extends BaseModel {
 
     @Column(nullable = false)
@@ -21,8 +22,7 @@ public class UserModel extends BaseModel {
     @Column(nullable = false)
     private String imgLink;
 
-    @OneToOne
-    @JoinColumn(name = "role_id")
+    @ManyToOne
     private RoleModel role;
 
     @OneToOne

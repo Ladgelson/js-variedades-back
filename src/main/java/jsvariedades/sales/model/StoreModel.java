@@ -1,16 +1,16 @@
 package jsvariedades.sales.model;
 
 import jakarta.persistence.*;
+import jsvariedades.sales.model.base.BaseModel;
 
 @Entity
-@Table(name = "Store")
-public class StoreModel extends BaseModel{
+@Table(name = "tb_store")
+public class StoreModel extends BaseModel {
 
     @Column(nullable = false)
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "company_id")
+    @ManyToOne
     private CompanyModel company;
 
     public StoreModel(){}
