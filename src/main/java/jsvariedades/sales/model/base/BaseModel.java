@@ -1,4 +1,4 @@
-package jsvariedades.sales.model;
+package jsvariedades.sales.model.base;
 
 import jakarta.persistence.*;
 import jsvariedades.sales.util.TimeZones;
