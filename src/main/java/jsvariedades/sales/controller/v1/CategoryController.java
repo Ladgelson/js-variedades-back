@@ -1,25 +1,27 @@
 package jsvariedades.sales.controller.v1;
 
+import jsvariedades.sales.dto.common.CategoryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 @RequestMapping("/api/v1/categories")
 public interface CategoryController {
     @GetMapping
-    ResponseEntity<Page<?>> findCategoriesPaginated(Pageable pageable);
+    ResponseEntity<Page<CategoryDTO>> findCategoriesPaginated(Pageable pageable);
 
     @GetMapping("/{id}")
-    ResponseEntity<?> findById(@PathVariable int id);
+    ResponseEntity<CategoryDTO> findById(@PathVariable Long id);
 
     @PostMapping
-    ResponseEntity<?> saveCategory(@RequestBody Object category);
+    ResponseEntity<Void> saveCategory(@RequestBody @Validated CategoryDTO category);
+
+    @PutMapping("/{id}")
+    ResponseEntity<CategoryDTO> updatedCategory(@PathVariable Long id, @RequestBody @Validated CategoryDTO updateCategory);
 
     @DeleteMapping("/{id}")
-    ResponseEntity<?> updatedCategory(@PathVariable int id, @RequestBody Object updateCategory);
-
-    @DeleteMapping("/{id}")
-    ResponseEntity<?> deleteCategory(@PathVariable int id);
+    ResponseEntity<Void> deleteCategory(@PathVariable Long id);
 }
