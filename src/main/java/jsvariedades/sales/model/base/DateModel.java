@@ -1,4 +1,4 @@
-package jsvariedades.sales.model;
+package jsvariedades.sales.model.base;
 
 import java.io.Serial;
 import java.io.Serializable;
