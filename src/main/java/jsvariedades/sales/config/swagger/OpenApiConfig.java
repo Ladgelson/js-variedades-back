@@ -1,4 +1,4 @@
-package jsvariedades.sales.config;
+package jsvariedades.sales.config.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
