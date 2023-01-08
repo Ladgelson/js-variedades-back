@@ -1,6 +1,7 @@
 package jsvariedades.sales.model;
 
 import jakarta.persistence.*;
+import jsvariedades.sales.enums.SuggestionStatus;
 import jsvariedades.sales.model.base.BaseModel;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 public class SuggestionModel extends BaseModel {
 
     @Column(nullable = false)
-    private String status;
+    @Enumerated(value = EnumType.STRING)
+    private SuggestionStatus status;
 
     @Column(nullable = false)
     @OneToMany(mappedBy = "suggestion")
@@ -20,16 +22,16 @@ public class SuggestionModel extends BaseModel {
     public SuggestionModel() {
     }
 
-    public SuggestionModel(String status, List<SuggestionItemModel> suggestionItemModel) {
+    public SuggestionModel(SuggestionStatus status, List<SuggestionItemModel> suggestionItemModel) {
         this.status = status;
         this.suggestionItemModel = suggestionItemModel;
     }
 
-    public String getStatus() {
+    public SuggestionStatus getStatus() {
         return status;
     }
 
-    public SuggestionModel setStatus(String status) {
+    public SuggestionModel setStatus(SuggestionStatus status) {
         this.status = status;
         return this;
     }
