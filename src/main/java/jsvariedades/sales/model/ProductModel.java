@@ -12,7 +12,7 @@ public class ProductModel extends BaseModel {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true, scale = 2)
+    @Column(scale = 2)
     private BigDecimal purchasePrice;
 
     @Column(nullable = false)
