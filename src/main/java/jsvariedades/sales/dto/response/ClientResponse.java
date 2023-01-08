@@ -12,14 +12,6 @@ public class ClientResponse {
     public ClientResponse() {
     }
 
-    public ClientResponse(String name, String email, String document, String phone, ClientStatus clientStatus) {
-        this.name = name;
-        this.email = email;
-        this.document = document;
-        this.phone = phone;
-        this.clientStatus = clientStatus;
-    }
-
     public String getName() {
         return name;
     }

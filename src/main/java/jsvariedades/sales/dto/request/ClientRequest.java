@@ -1,28 +1,22 @@
 package jsvariedades.sales.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 public class ClientRequest {
 
     @NotBlank
     private String name;
 
+    @Email(message = "Needs to be a valid email")
     private String email;
 
     @NotBlank
+    @CPF
     private String document;
 
     private String phone;
-
-    public ClientRequest() {
-    }
-
-    public ClientRequest(String name, String email, String document, String phone) {
-        this.name = name;
-        this.email = email;
-        this.document = document;
-        this.phone = phone;
-    }
 
     public String getName() {
         return name;
