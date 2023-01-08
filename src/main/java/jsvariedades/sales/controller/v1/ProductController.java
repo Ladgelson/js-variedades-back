@@ -1,29 +1,36 @@
 package jsvariedades.sales.controller.v1;
 
+import jsvariedades.sales.dto.common.ProductDTO;
+import jsvariedades.sales.dto.request.ProductRequest;
+import jsvariedades.sales.dto.response.ProductResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/produts")
 public interface ProductController {
+
+    String USER_ID = "user-id";
+
     @PostMapping
-    ResponseEntity<?> saveProduct(@RequestBody Object product);
+    ResponseEntity<Void> saveProduct(@RequestBody ProductRequest product);
 
     @GetMapping
-    ResponseEntity<?> findAllPaginated(Pageable pageable);
+    ResponseEntity<Page<ProductResponse>> findAllPaginated(Pageable pageable);
 
     @GetMapping
-    ResponseEntity<?> findMostLikedPaginated(Pageable pageable);
+    ResponseEntity<Page<ProductResponse>> findMostLikedPaginated(Pageable pageable);
 
     @GetMapping
-    ResponseEntity<?> findLikedByUserPaginated(Pageable pageable, @RequestHeader("user-id") int userId);
+    ResponseEntity<Page<ProductResponse>> findLikedByUserPaginated(Pageable pageable, @RequestHeader(USER_ID) Long userId);
 
     @GetMapping("/{id}")
-    ResponseEntity<?> findById(@PathVariable int id);
+    ResponseEntity<ProductDTO> findById(@PathVariable Long id);
 
     @GetMapping("/{id}/liked-by/{userId}")
-    ResponseEntity<?> likeProduct(@PathVariable int id, @PathVariable int userId);
+    ResponseEntity<Void> likeProduct(@PathVariable Long id, @PathVariable Long userId);
 
     @PostMapping("/{id}/categories/{categId}")
-    ResponseEntity<?> associateCategory(@PathVariable int id, @PathVariable int categId);
+    ResponseEntity<Void> associateCategory(@PathVariable Long id, @PathVariable Long categId);
 }

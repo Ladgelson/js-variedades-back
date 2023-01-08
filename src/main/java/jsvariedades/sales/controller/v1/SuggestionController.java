@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jsvariedades.sales.dto.request.SuggestionItemRequest;
+import jsvariedades.sales.dto.response.SuggestionResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +19,14 @@ public interface SuggestionController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping
-    ResponseEntity<?> createSuggestion();
+    ResponseEntity<Void> createSuggestion();
+
+    @Operation(description = "Create a new suggestion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Suggestion successfully found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @GetMapping
+    ResponseEntity<SuggestionResponse> getLatestSuggestion();
 
     @Operation(description = "Create a item of a suggestion")
     @ApiResponses(value = {
@@ -25,7 +34,7 @@ public interface SuggestionController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/add-item")
-    ResponseEntity<?> addItem(@RequestBody Object item, @PathVariable String id);
+    ResponseEntity<Void> addItem(@RequestBody SuggestionItemRequest item, @PathVariable String id);
 
     @Operation(description = "Finish a suggestion")
     @ApiResponses(value = {
@@ -33,5 +42,5 @@ public interface SuggestionController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/finish")
-    ResponseEntity<?> finishSuggestion(@PathVariable String id);
+    ResponseEntity<Void> finishSuggestion(@PathVariable String id);
 }
