@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jsvariedades.sales.dto.common.SaleDTO;
+import jsvariedades.sales.dto.request.SaleItemRequest;
+import jsvariedades.sales.dto.response.SaleItemResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +22,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @GetMapping
-    ResponseEntity<Page<?>> findSalesPaginated(Pageable pageable);
+    ResponseEntity<Page<SaleDTO>> findSalesPaginated(Pageable pageable);
 
     @Operation(description = "Find Sale by id")
     @ApiResponses(value = {
@@ -27,7 +30,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @GetMapping("/{id}")
-    ResponseEntity<?> findById(@PathVariable int id);
+    ResponseEntity<SaleDTO> findById(@PathVariable int id);
 
     @Operation(description = "Initialize a Sale on the database")
     @ApiResponses(value = {
@@ -35,7 +38,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping
-    ResponseEntity<?> initSale();
+    ResponseEntity<SaleDTO> initSale();
 
     @Operation(description = "Add a new item in a Sale")
     @ApiResponses(value = {
@@ -43,7 +46,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/add-item")
-    ResponseEntity<?> addItem(@PathVariable int id, @RequestBody Object item);
+    ResponseEntity<SaleItemResponse> addItem(@PathVariable int id, @RequestBody SaleItemRequest item);
 
     @Operation(description = "Delete a item of a Sale")
     @ApiResponses(value = {
@@ -51,7 +54,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @DeleteMapping("/{idSale}/items/{idItem}")
-    ResponseEntity<?> removeItem(@PathVariable int idSale, @PathVariable int idItem);
+    ResponseEntity<Void> removeItem(@PathVariable int idSale, @PathVariable int idItem);
 
     @Operation(description = "Reset a Sale from zero")
     @ApiResponses(value = {
@@ -59,7 +62,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/reset")
-    ResponseEntity<?> resetSale(@PathVariable int id);
+    ResponseEntity<Void> resetSale(@PathVariable int id);
 
     @Operation(description = "Finish a Sale")
     @ApiResponses(value = {
@@ -67,5 +70,5 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/finish")
-    ResponseEntity<?> finishSale(@PathVariable int id);
+    ResponseEntity<Void> finishSale(@PathVariable int id);
 }
