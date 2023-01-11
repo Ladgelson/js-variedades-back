@@ -2,10 +2,15 @@ package jsvariedades.sales.model;
 
 import jakarta.persistence.*;
 import jsvariedades.sales.model.base.BaseModel;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_user")
-public class UserModel extends BaseModel {
+public class UserModel extends BaseModel implements UserDetails {
 
     @Column(nullable = false)
     private String username;
@@ -32,18 +37,28 @@ public class UserModel extends BaseModel {
     public UserModel() {
     }
 
-    public UserModel(String username, String email, String password, boolean isActive, String imgLink, RoleModel role, CompanyModel company) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.isActive = isActive;
-        this.imgLink = imgLink;
-        this.role = role;
-        this.company = company;
-    }
-
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public UserModel setUsername(String username) {
@@ -58,6 +73,11 @@ public class UserModel extends BaseModel {
     public UserModel setEmail(String email) {
         this.email = email;
         return this;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(this.role);
     }
 
     public String getPassword() {

@@ -13,3 +13,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
+app:
+  jwtSecret: eyJhbGciOiJIUzI1NiJ9
+  jwtExpirationMs: 86400000

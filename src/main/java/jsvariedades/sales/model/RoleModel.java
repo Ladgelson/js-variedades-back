@@ -3,10 +3,11 @@ package jsvariedades.sales.model;
 import jakarta.persistence.*;
 import jsvariedades.sales.enums.RoleType;
 import jsvariedades.sales.model.base.BaseModel;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "tb_role")
-public class RoleModel extends BaseModel {
+public class RoleModel extends BaseModel implements GrantedAuthority {
     @Enumerated(value = EnumType.STRING)
     private RoleType name;
 
@@ -30,5 +31,10 @@ public class RoleModel extends BaseModel {
         return "Role{" +
                 "roleName='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getAuthority() {
+        return name.toString();
     }
 }
