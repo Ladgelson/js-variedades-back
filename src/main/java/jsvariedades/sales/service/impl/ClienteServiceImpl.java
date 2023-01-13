@@ -33,7 +33,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @LogExecution
     public ClientModel createClient(ClientRequest client) {
-        return  clientRepository.save(ClienteMapper.clienteRequestToClienteModel(client));
+        return clientRepository.save(ClienteMapper.clienteRequestToClienteModel(client));
     }
 
     @Override

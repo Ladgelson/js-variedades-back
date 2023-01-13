@@ -2,6 +2,7 @@ package jsvariedades.sales.mapper;
 
 import jsvariedades.sales.dto.request.ClientRequest;
 import jsvariedades.sales.dto.response.ClientResponse;
+import jsvariedades.sales.enums.ClientStatus;
 import jsvariedades.sales.model.ClientModel;
 
 public final class ClienteMapper {
@@ -28,8 +29,7 @@ public final class ClienteMapper {
                 .setName(clientRequest.getName())
                 .setEmail(clientRequest.getEmail())
                 .setDocument(clientRequest.getDocument())
-                .setPhone(clientRequest.getPhone());
+                .setPhone(clientRequest.getPhone())
+                .setStatus(ClientStatus.ACTIVE);
     }
-
-
 }

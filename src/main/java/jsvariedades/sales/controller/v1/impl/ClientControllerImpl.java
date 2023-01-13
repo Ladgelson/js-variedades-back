@@ -1,5 +1,6 @@
 package jsvariedades.sales.controller.v1.impl;
 
+import jsvariedades.sales.config.logging.LogExecution;
 import jsvariedades.sales.controller.v1.ClientController;
 import jsvariedades.sales.dto.request.ClientRequest;
 import jsvariedades.sales.dto.response.ClientResponse;
@@ -28,43 +29,38 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
+    @LogExecution
     public ResponseEntity<Void> createClient(ClientRequest client) {
-        logger.info("m=createClint stage=init clientRequest={}", client);
         var id = clienteService.createClient(client).getId();
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
-        logger.info("m=createClint stage=finish");
         return ResponseEntity.created(uri).build();
     }
 
     @Override
+    @LogExecution
     public ResponseEntity<ClientResponse> findById(Long id) {
-        logger.info("m=findById stage=init id={}",id);
         var cliente = clienteService.findById(id);
-        logger.info("m=createClint stage=finish");
         return ResponseEntity.ok(ClienteMapper.clienteModelToClientResponse(cliente));
     }
 
     @Override
+    @LogExecution
     public ResponseEntity<Page<ClientResponse>> findAllPaginated(Pageable pageable) {
-        logger.info("m=findAllPaginated stage=init");
         var page = clienteService.findAllPaginated(pageable);
-        logger.info("m=findAllPaginated stage=finish");
         return ResponseEntity.ok(page);
     }
 
     @Override
-    public ResponseEntity<ClientResponse> updateClient(Long id, ClientModel client) {
-        logger.info("m=updateClient stage=init id={} client={}", id, client);
-        var cliente = clienteService.updateClient(id, client);
-        logger.info("m=updateClient stage=finish");
+    @LogExecution
+    public ResponseEntity<ClientResponse> updateClient(Long id, ClientRequest client) {
+        var cliente = clienteService.updateClient(id, ClienteMapper.clienteRequestToClienteModel(client));
         return ResponseEntity.ok(ClienteMapper.clienteModelToClientResponse(cliente));
     }
 
     @Override
+    @LogExecution
     public ResponseEntity<Void> inactivateClient(Long id) {
-        logger.info("m=inactivateClient stage=init idParaInativar={}", id);
         clienteService.inactivateClient(id);
-        logger.info("m=inactivateClient stage=finish");
         return ResponseEntity.ok().build();
     }
 }

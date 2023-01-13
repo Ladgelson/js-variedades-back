@@ -17,12 +17,16 @@ public interface ProductController {
     ResponseEntity<Void> saveProduct(@RequestBody ProductRequest product);
 
     @GetMapping
-    ResponseEntity<Page<ProductResponse>> findAllPaginated(Pageable pageable);
+    ResponseEntity<Page<ProductResponse>> findAllPaginated(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction);
 
-    @GetMapping
+//    @GetMapping
     ResponseEntity<Page<ProductResponse>> findMostLikedPaginated(Pageable pageable);
 
-    @GetMapping
+//    @GetMapping
     ResponseEntity<Page<ProductResponse>> findLikedByUserPaginated(Pageable pageable, @RequestHeader(USER_ID) Long userId);
 
     @GetMapping("/{id}")

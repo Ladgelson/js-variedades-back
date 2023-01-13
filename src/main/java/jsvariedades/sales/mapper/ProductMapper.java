@@ -33,7 +33,7 @@ public final class ProductMapper {
                 .setPurchasePrice(productModel.getPurchasePrice())
                 .setSaleValue(productModel.getSaleValue())
                 .setDescription(productModel.getDescription())
-                .setCategory(productModel.getCategory())
+                .setCategory(CategoryMapper.categoryModelToCategoryDto(productModel.getCategory()))
                 .setFrequency(productModel.getFrequency())
                 .setId(productModel.getId());
     }
