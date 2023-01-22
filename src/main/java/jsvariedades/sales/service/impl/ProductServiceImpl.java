@@ -1,14 +1,15 @@
 package jsvariedades.sales.service.impl;
 
 import jsvariedades.sales.config.logging.LogExecution;
-import jsvariedades.sales.dto.request.ProductRequest;
 import jsvariedades.sales.dto.response.ProductResponse;
 import jsvariedades.sales.mapper.ProductMapper;
-import jsvariedades.sales.model.ClientModel;
+import jsvariedades.sales.model.LikeModel;
 import jsvariedades.sales.model.ProductModel;
 import jsvariedades.sales.repository.ProductRepository;
 import jsvariedades.sales.service.CategoryService;
+import jsvariedades.sales.service.LikeService;
 import jsvariedades.sales.service.ProductService;
+import jsvariedades.sales.service.UserService;
 import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +28,15 @@ public class ProductServiceImpl implements ProductService {
 
     private final CategoryService categoryService;
 
+    private final UserService userService;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService) {
+    private final LikeService likeService;
+
+    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService, UserService userService, LikeService likeService) {
         this.productRepository = productRepository;
         this.categoryService = categoryService;
+        this.userService = userService;
+        this.likeService = likeService;
     }
 
     @Override
@@ -45,10 +51,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @LogExecution
     public void assiciateCategory(Long id, Long idCategory) {
-        logger.info("m=assiciateCategory stage=init id={} categoryId={}", id, idCategory);
         var category = categoryService.findById(idCategory);
         var product = findById(id);
-        logger.info("m=assiciateCategory stage=finish");
         product.setCategory(category);
         productRepository.save(product);
     }
@@ -56,7 +60,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @LogExecution
     public void likeProduct(Long id, Long userId) {
-//      Entity user not create.
+        var product = findById(id);
+        var user = userService.findById(userId);
+        var like = new LikeModel().setUser(user).setProductModel(product);
+        likeService.save(like);
     }
 
     @Override
@@ -69,14 +76,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @LogExecution
     public Page<ProductResponse> findMostLikedPaginated(Pageable pageable) {
-        logger.info("m=findMostLikedPaginated stage=init");
         return productRepository.findAll(pageable).map(ProductMapper::productModelToProductResponse);
     }
 
     @Override
     @LogExecution
     public Page<ProductResponse> findAllPaginated(Integer page, Integer linesPerPage, String orderBy, String direction) {
-        logger.info("m=findAllPaginated stage=init page={} linesPerPage={} orderBy={} direction={}", page, linesPerPage, orderBy, direction);
         PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return productRepository.findAll(pageRequest).map(ProductMapper::productModelToProductResponse);
     }
@@ -84,7 +89,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @LogExecution
     public ProductModel saveProduct(ProductModel product) {
-        logger.info("m=saveProduct stage=init product={}", product);
         return productRepository.save(product);
     }
 }

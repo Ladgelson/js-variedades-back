@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/produts")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public interface ProductController {
 
     String USER_ID = "user-id";

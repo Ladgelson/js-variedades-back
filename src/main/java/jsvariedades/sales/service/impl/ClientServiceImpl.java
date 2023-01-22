@@ -1,12 +1,10 @@
 package jsvariedades.sales.service.impl;
 
 import jsvariedades.sales.config.logging.LogExecution;
-import jsvariedades.sales.controller.v1.impl.CategoryControllerImpl;
 import jsvariedades.sales.dto.request.ClientRequest;
 import jsvariedades.sales.dto.response.ClientResponse;
 import jsvariedades.sales.enums.ClientStatus;
 import jsvariedades.sales.mapper.ClienteMapper;
-import jsvariedades.sales.model.CategoryModel;
 import jsvariedades.sales.model.ClientModel;
 import jsvariedades.sales.repository.ClientRepository;
 import jsvariedades.sales.service.ClienteService;
@@ -17,16 +15,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class ClienteServiceImpl implements ClienteService {
+public class ClientServiceImpl implements ClienteService {
 
-    private final Logger logger = LoggerFactory.getLogger(ClienteServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
 
     private final ClientRepository clientRepository;
 
-    public ClienteServiceImpl(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 

@@ -20,8 +20,6 @@ import java.net.URI;
 @RestController
 public class ClientControllerImpl implements ClientController {
 
-    private final Logger logger = LoggerFactory.getLogger(CategoryControllerImpl.class);
-
     private final ClienteService clienteService;
 
     public ClientControllerImpl(ClienteService clienteService) {

@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/clients")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public interface ClientController {
     @PostMapping
     ResponseEntity<Void> createClient(@RequestBody @Validated ClientRequest client);

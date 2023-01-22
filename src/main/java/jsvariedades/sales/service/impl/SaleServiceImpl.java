@@ -12,16 +12,22 @@ import jsvariedades.sales.model.SaleModel;
 import jsvariedades.sales.repository.SaleItemRepository;
 import jsvariedades.sales.repository.SaleRepository;
 import jsvariedades.sales.service.ProductService;
+import jsvariedades.sales.service.SaleHistoryService;
 import jsvariedades.sales.service.SaleService;
-import org.hibernate.ObjectNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static jsvariedades.sales.enums.SaleAction.*;
+
 @Service
 public class SaleServiceImpl implements SaleService {
+
+    private final Logger logger = LoggerFactory.getLogger(SaleServiceImpl.class);
 
     private final SaleItemRepository saleItemRepository;
 
@@ -29,17 +35,21 @@ public class SaleServiceImpl implements SaleService {
 
     private final ProductService productService;
 
-    public SaleServiceImpl(SaleItemRepository saleItemRepository, SaleRepository saleRepository, ProductService productService) {
+    private final SaleHistoryService saleHistoryService;
+
+    public SaleServiceImpl(SaleItemRepository saleItemRepository, SaleRepository saleRepository, ProductService productService, SaleHistoryService saleHistoryService) {
         this.saleItemRepository = saleItemRepository;
         this.saleRepository = saleRepository;
         this.productService = productService;
+        this.saleHistoryService = saleHistoryService;
     }
 
     @Override
     @LogExecution
     public SaleModel findByIdSale(Long id) {
         return saleRepository.findById(id).orElseThrow( () -> {
-            throw new NotFound("Object not found");
+            logger.error("m=findByIdSale id={} stage=error message=Sale was not found", id);
+            throw new NotFound("Sale was not found");
         });
     }
 
@@ -48,6 +58,7 @@ public class SaleServiceImpl implements SaleService {
     public void finishSale(Long id) {
         var sale = findByIdSale(id);
         sale.setStatus(SaleStatus.FINISHED);
+        saleHistoryService.save(sale, FINISH);
     }
 
     @Override
@@ -63,6 +74,7 @@ public class SaleServiceImpl implements SaleService {
                 .setStatus(SaleStatus.STARTED)
                 .setObs("");
         saleRepository.save(newSale);
+        saleHistoryService.save(newSale, START);
         return SaleMapper.saleModelToSaleDto(newSale, List.of());
     }
 
@@ -70,16 +82,20 @@ public class SaleServiceImpl implements SaleService {
     @LogExecution
     public SaleItemResponse addItem(Long id, SaleItemRequest item) {
         var sale = findByIdSale(id);
-        var product = productService.findByIdProduct(item.getProductId());
-        var newItem = SaleItemMapper.saleRequestToSaleModel(item)
+        var product = productService.findById(item.getProductId());
+        var newItem = SaleItemMapper.saleItemRequestToSaleItemModel(item)
                 .setSale(sale)
                 .setProduct(product);
         saleItemRepository.save(newItem);
+        saleHistoryService.save(sale, ADD_ITEM);
         return SaleItemMapper.saleItemModelToSaleItemResponse(newItem);
     }
 
     @Override
-    public void removeItem(Long idSale, Long idItem) {
+    @LogExecution
+    public void removeItem(Long id, Long idItem) {
+        var sale = findByIdSale(id);
+        saleHistoryService.save(sale, REMOVE_ITEM);
         saleRepository.deleteById(idItem);
     }
 
@@ -88,5 +104,6 @@ public class SaleServiceImpl implements SaleService {
     public void resetSale(Long id) {
         var sale = findByIdSale(id);
         sale.setStatus(SaleStatus.RESTARTED);
+        saleHistoryService.save(sale, RESTART);
     }
 }

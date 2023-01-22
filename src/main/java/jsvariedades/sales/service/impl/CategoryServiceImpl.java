@@ -3,11 +3,11 @@ package jsvariedades.sales.service.impl;
 import jsvariedades.sales.config.logging.LogExecution;
 import jsvariedades.sales.controller.v1.impl.CategoryControllerImpl;
 import jsvariedades.sales.dto.common.CategoryDTO;
+import jsvariedades.sales.exceptions.NotFound;
 import jsvariedades.sales.mapper.CategoryMapper;
 import jsvariedades.sales.model.CategoryModel;
 import jsvariedades.sales.repository.CategoryRepository;
 import jsvariedades.sales.service.CategoryService;
-import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -35,8 +35,8 @@ public class CategoryServiceImpl implements CategoryService {
     @LogExecution
     public CategoryModel findById(Long id) {
         return categoryRepository.findById(id).orElseThrow( () -> {
-            logger.info("m=findById stage=error id={}", id);
-            return new ObjectNotFoundException("Error: Categoria não encontrada.", id);
+            logger.error("m=findById stage=error id={} message=Category was not found", id);
+            return new NotFound("Error: Categoria não encontrada.");
         });
     }
 
@@ -49,11 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @LogExecution
     public void updateCategory(Long id, CategoryModel categoryModel) {
-        var category = categoryRepository.findById(id)
-                .orElseThrow( () -> {
-                    logger.error("m=updateCategory stage=error id={} categoryModel={}", id, categoryModel);
-                    return new ObjectNotFoundException("error", id);
-                });
+        var category = findById(id);
         updateData(category, categoryModel);
         categoryRepository.save(category);
     }
@@ -61,9 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @LogExecution
     public void delete(Long id) {
-        try{
-            categoryRepository.deleteById(id);
-        } catch (Exception ignore){}
+        categoryRepository.deleteById(id);
     }
 
     private void updateData(CategoryModel c1, CategoryModel c2){

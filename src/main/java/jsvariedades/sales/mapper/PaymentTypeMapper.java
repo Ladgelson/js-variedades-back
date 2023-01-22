@@ -6,6 +6,6 @@ import jsvariedades.sales.model.PaymentTypeModel;
 public class PaymentTypeMapper {
 
     public static PaymentTypeDTO paymentModelToPaymentTypeDto(PaymentTypeModel payment) {
-        return new PaymentTypeDTO(payment);
+        return new PaymentTypeDTO().setType(payment.getType());
     }
 }

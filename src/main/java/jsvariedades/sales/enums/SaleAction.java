@@ -8,5 +8,6 @@ public enum SaleAction {
     ADD_PAYMENT_TYPE,
     REMOVE_PAYMENT_TYPE,
     CANCEL,
-    RESTART
+    RESTART,
+    FINISH
 }

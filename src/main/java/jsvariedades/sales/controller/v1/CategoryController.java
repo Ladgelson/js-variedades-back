@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RequestMapping("/api/v1/categories")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public interface CategoryController {
     @GetMapping
     ResponseEntity<Page<CategoryDTO>> findCategoriesPaginated(Pageable pageable);

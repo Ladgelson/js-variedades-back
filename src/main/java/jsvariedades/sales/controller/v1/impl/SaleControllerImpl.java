@@ -45,6 +45,11 @@ public class SaleControllerImpl implements SaleController {
     }
 
     @Override
+    public ResponseEntity<SaleItemResponse> changeQuantity(Long id, SaleItemRequest item, String idItem) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<Void> removeItem(Long idSale, Long idItem) {
         saleService.removeItem(idSale,idItem);
         return ResponseEntity.ok().build();
