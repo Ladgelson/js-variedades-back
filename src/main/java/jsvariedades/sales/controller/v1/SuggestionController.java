@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Suggestion", description = "Resource to manage suggestions of things to buy")
 @RequestMapping("/api/v1/suggestions")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public interface SuggestionController {
     @Operation(description = "Create a new suggestion")
     @ApiResponses(value = {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Authentication", description = "Resource to authenticate in the system")
 @RequestMapping("/api/v1/auth")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public interface AuthController {
     @PostMapping("/login")
     ResponseEntity<JwtResponse> login(@RequestBody LoginRequest authRequest);

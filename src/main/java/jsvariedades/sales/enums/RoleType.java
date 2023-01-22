@@ -1,6 +1,6 @@
 package jsvariedades.sales.enums;
 
 public enum RoleType {
-    USER,
+    ROLE_USER,
     ADMIN
 }

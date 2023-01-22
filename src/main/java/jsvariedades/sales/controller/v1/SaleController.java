@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Sales", description = "Resource to manage sales of the company")
 @RequestMapping("/api/v1/sales")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public interface SaleController {
     @Operation(description = "Find Sales paginated")
     @ApiResponses(value = {
@@ -30,7 +31,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @GetMapping("/{id}")
-    ResponseEntity<SaleDTO> findById(@PathVariable int id);
+    ResponseEntity<SaleDTO> findById(@PathVariable Long id);
 
     @Operation(description = "Initialize a Sale on the database")
     @ApiResponses(value = {
@@ -46,7 +47,15 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/add-item")
-    ResponseEntity<SaleItemResponse> addItem(@PathVariable int id, @RequestBody SaleItemRequest item);
+    ResponseEntity<SaleItemResponse> addItem(@PathVariable Long id, @RequestBody SaleItemRequest item);
+
+    @Operation(description = "Change quantity of item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Item quantity changed", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @PostMapping("/{id}/change-quantity/{idItem}")
+    ResponseEntity<SaleItemResponse> changeQuantity(@PathVariable Long id, @RequestBody SaleItemRequest item, @PathVariable String idItem);
 
     @Operation(description = "Delete a item of a Sale")
     @ApiResponses(value = {
@@ -54,7 +63,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @DeleteMapping("/{idSale}/items/{idItem}")
-    ResponseEntity<Void> removeItem(@PathVariable int idSale, @PathVariable int idItem);
+    ResponseEntity<Void> removeItem(@PathVariable Long idSale, @PathVariable Long idItem);
 
     @Operation(description = "Reset a Sale from zero")
     @ApiResponses(value = {
@@ -62,7 +71,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/reset")
-    ResponseEntity<Void> resetSale(@PathVariable int id);
+    ResponseEntity<Void> resetSale(@PathVariable Long id);
 
     @Operation(description = "Finish a Sale")
     @ApiResponses(value = {
@@ -70,5 +79,5 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/finish")
-    ResponseEntity<Void> finishSale(@PathVariable int id);
+    ResponseEntity<Void> finishSale(@PathVariable Long id);
 }

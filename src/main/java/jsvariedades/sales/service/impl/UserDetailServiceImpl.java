@@ -1,4 +1,4 @@
-package jsvariedades.sales.service;
+package jsvariedades.sales.service.impl;
 
 import jsvariedades.sales.model.UserModel;
 import jsvariedades.sales.repository.UserRepository;

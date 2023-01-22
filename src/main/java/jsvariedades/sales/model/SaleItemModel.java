@@ -21,13 +21,9 @@ public class SaleItemModel extends BaseModel {
     @ManyToOne
     private SaleModel sale;
 
-    public SaleItemModel() {
-    }
+    private int quantity;
 
-    public SaleItemModel(BigDecimal value, ProductModel product, SaleModel sale) {
-        this.value = value;
-        this.product = product;
-        this.sale = sale;
+    public SaleItemModel() {
     }
 
     public BigDecimal getValue() {
@@ -57,12 +53,22 @@ public class SaleItemModel extends BaseModel {
         return this;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public SaleItemModel setQuantity(int quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "SaleItemModel{" +
                 "value=" + value +
                 ", product=" + product +
                 ", sale=" + sale +
+                ", quantity=" + quantity +
                 '}';
     }
 }

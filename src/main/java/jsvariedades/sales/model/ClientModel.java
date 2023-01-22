@@ -83,6 +83,15 @@ public class ClientModel extends BaseModel {
         return this;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public ClientModel setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "ClientModel{" +
