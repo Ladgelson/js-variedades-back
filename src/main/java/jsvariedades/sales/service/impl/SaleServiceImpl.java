@@ -158,6 +158,7 @@ public class SaleServiceImpl implements SaleService {
                     return new NotFound("Sale was not found");
                 });
         itemToBeChanged.setQuantity(item.getQuantity());
+        updateTotal(sale);
         saleItemRepository.save(itemToBeChanged);
         saleHistoryService.save(sale, ALTER_QUANTITY_ITEM);
     }
