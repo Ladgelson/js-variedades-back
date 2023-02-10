@@ -3,6 +3,9 @@ package jsvariedades.sales.dto.response;
 import java.math.BigDecimal;
 
 public class SaleItemResponse {
+
+    private Long id;
+
     private BigDecimal value;
 
     private ProductResponse product;
@@ -36,10 +39,20 @@ public class SaleItemResponse {
         return this;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public SaleItemResponse setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "SaleItemResponse{" +
-                "value=" + value +
+                "id=" + id +
+                ", value=" + value +
                 ", product=" + product +
                 ", quantity=" + quantity +
                 '}';

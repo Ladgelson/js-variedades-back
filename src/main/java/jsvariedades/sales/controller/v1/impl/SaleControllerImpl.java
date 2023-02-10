@@ -2,6 +2,7 @@ package jsvariedades.sales.controller.v1.impl;
 
 import jsvariedades.sales.controller.v1.SaleController;
 import jsvariedades.sales.dto.common.SaleDTO;
+import jsvariedades.sales.dto.request.FinishSaleRequest;
 import jsvariedades.sales.dto.request.SaleItemRequest;
 import jsvariedades.sales.dto.response.SaleItemResponse;
 import jsvariedades.sales.mapper.SaleMapper;
@@ -35,7 +36,7 @@ public class SaleControllerImpl implements SaleController {
     @Override
     public ResponseEntity<SaleDTO> initSale() {
         var sale = saleService.initSale();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(sale);
     }
 
     @Override
@@ -45,8 +46,9 @@ public class SaleControllerImpl implements SaleController {
     }
 
     @Override
-    public ResponseEntity<SaleItemResponse> changeQuantity(Long id, SaleItemRequest item, String idItem) {
-        return null;
+    public ResponseEntity<Void> changeQuantity(Long id, SaleItemRequest item, Long idItem) {
+        saleService.changeQuantity(id, item, idItem);
+        return ResponseEntity.ok().build();
     }
 
     @Override
@@ -62,8 +64,8 @@ public class SaleControllerImpl implements SaleController {
     }
 
     @Override
-    public ResponseEntity<Void> finishSale(Long id) {
-        saleService.finishSale(id);
+    public ResponseEntity<Void> finishSale(Long id, FinishSaleRequest finishSaleRequest) {
+        saleService.finishSale(id, finishSaleRequest);
         return ResponseEntity.ok().build();
     }
 }

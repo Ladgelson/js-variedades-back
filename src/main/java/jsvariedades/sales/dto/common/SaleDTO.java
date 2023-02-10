@@ -4,10 +4,13 @@ import jsvariedades.sales.dto.response.SaleItemResponse;
 import jsvariedades.sales.enums.SaleStatus;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
 public class SaleDTO {
+
+    private Long id;
 
     private SaleStatus status;
 
@@ -20,6 +23,17 @@ public class SaleDTO {
     private Long storeId;
 
     private List<SaleItemResponse> items;
+
+    public LocalDateTime getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public SaleDTO setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+        return this;
+    }
+
+    private LocalDateTime lastUpdatedDate;
 
     public SaleStatus getStatus() {
         return status;
@@ -75,15 +89,26 @@ public class SaleDTO {
         return this;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public SaleDTO setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "SaleDTO{" +
-                "status=" + status +
+                "id=" + id +
+                ", status=" + status +
                 ", paymentTypes=" + paymentTypes +
                 ", obs='" + obs + '\'' +
                 ", total=" + total +
                 ", storeId=" + storeId +
                 ", items=" + items +
+                ", lastUpdatedDate=" + lastUpdatedDate +
                 '}';
     }
 }

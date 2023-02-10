@@ -14,6 +14,7 @@ public class SaleItemMapper {
 
     public static SaleItemResponse saleItemModelToSaleItemResponse(SaleItemModel saleItemModel){
         return new SaleItemResponse()
+                .setId(saleItemModel.getId())
                 .setValue(saleItemModel.getValue())
                 .setProduct(ProductMapper.productModelToProductResponse(saleItemModel.getProduct()))
                 .setQuantity(saleItemModel.getQuantity());

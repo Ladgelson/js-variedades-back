@@ -14,9 +14,21 @@ public class ProductDTO {
 
     private int frequency;
 
+
+    private String imgLink;
+
     private String description;
 
     private CategoryDTO category;
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public ProductDTO setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+        return this;
+    }
 
     public Long getId() {
         return id;
@@ -89,6 +101,7 @@ public class ProductDTO {
                 ", purchasePrice=" + purchasePrice +
                 ", saleValue=" + saleValue +
                 ", frequency=" + frequency +
+                ", imgLink='" + imgLink + '\'' +
                 ", description='" + description + '\'' +
                 ", category=" + category +
                 '}';

@@ -11,22 +11,26 @@ public final class SaleMapper {
 
     public static SaleDTO saleModelToSaleDto(SaleModel sale, List<SaleItemModel> items){
         return new SaleDTO()
+                .setId(sale.getId())
                 .setTotal(sale.getTotal())
                 .setItems(items.stream().map(SaleItemMapper::saleItemModelToSaleItemResponse).collect(Collectors.toList()))
                 .setStatus(sale.getStatus())
                 .setPaymentTypes(sale.getPaymentTypes().stream().map(PaymentTypeMapper::paymentModelToPaymentTypeDto).collect(Collectors.toSet()))
                 .setStoreId(sale.getStore().getId())
+                .setLastUpdatedDate(sale.getDateModel().getUpdatedDate())
                 .setObs(sale.getObs());
     }
 
     public static SaleDTO saleModelToSaleDto(SaleModel sale){
         return new SaleDTO()
+                .setId(sale.getId())
                 .setTotal(sale.getTotal())
-//                .setItems(items.stream().map(SaleItemMapper::saleItemModelToSaleItemResponse).collect(Collectors.toList()))
+                .setItems(sale.getItems().stream().map(SaleItemMapper::saleItemModelToSaleItemResponse).collect(Collectors.toList()))
                 .setStatus(sale.getStatus())
                 .setPaymentTypes(sale.getPaymentTypes().stream().map(PaymentTypeMapper::paymentModelToPaymentTypeDto).collect(Collectors.toSet()))
                 .setStoreId(sale.getStore().getId())
-                .setObs(sale.getObs());
+                .setObs(sale.getObs())
+                .setLastUpdatedDate(sale.getDateModel().getUpdatedDate());
     }
 
 }
