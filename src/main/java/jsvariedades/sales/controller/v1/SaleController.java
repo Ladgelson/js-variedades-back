@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jsvariedades.sales.dto.common.SaleDTO;
+import jsvariedades.sales.dto.request.FinishSaleRequest;
 import jsvariedades.sales.dto.request.SaleItemRequest;
 import jsvariedades.sales.dto.response.SaleItemResponse;
 import org.springframework.data.domain.Page;
@@ -55,7 +56,7 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/change-quantity/{idItem}")
-    ResponseEntity<SaleItemResponse> changeQuantity(@PathVariable Long id, @RequestBody SaleItemRequest item, @PathVariable String idItem);
+    ResponseEntity<Void> changeQuantity(@PathVariable Long id, @RequestBody SaleItemRequest item, @PathVariable Long idItem);
 
     @Operation(description = "Delete a item of a Sale")
     @ApiResponses(value = {
@@ -79,5 +80,5 @@ public interface SaleController {
             @ApiResponse(responseCode = "400", description = "Missing or invalid path variable", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @PostMapping("/{id}/finish")
-    ResponseEntity<Void> finishSale(@PathVariable Long id);
+    ResponseEntity<Void> finishSale(@PathVariable Long id, @RequestBody FinishSaleRequest finishSaleRequest);
 }

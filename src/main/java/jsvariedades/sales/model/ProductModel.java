@@ -24,6 +24,9 @@ public class ProductModel extends BaseModel {
     @Column(nullable = false)
     private String description;
 
+
+    private String imgLink;
+
     @ManyToOne
     private StoreModel store;
 
@@ -105,6 +108,14 @@ public class ProductModel extends BaseModel {
         this.category = category;
         return this;
     }
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public ProductModel setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+        return this;
+    }
 
     @Override
     public String toString() {
@@ -114,6 +125,7 @@ public class ProductModel extends BaseModel {
                 ", saleValue=" + saleValue +
                 ", frequency=" + frequency +
                 ", description='" + description + '\'' +
+                ", imgLink='" + imgLink + '\'' +
                 ", store=" + store +
                 ", category=" + category +
                 '}';

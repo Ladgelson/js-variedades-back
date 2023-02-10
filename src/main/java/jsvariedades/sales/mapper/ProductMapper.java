@@ -13,7 +13,7 @@ public final class ProductMapper {
                 .setDescription(productModel.getDescription())
                 .setFrequency(productModel.getFrequency())
                 .setId(productModel.getId())
-                .setImgLink("null")
+                .setImgLink(productModel.getImgLink())
                 .setPurchasePrice(productModel.getPurchasePrice())
                 .setSaleValue(productModel.getSaleValue());
     }
@@ -22,12 +22,12 @@ public final class ProductMapper {
         return new ProductRequest()
                 .setName(productModel.getName())
                 .setDescription(productModel.getDescription())
-                .setImgLink("null")
+                .setImgLink(productModel.getImgLink())
                 .setPurchasePrice(productModel.getPurchasePrice())
                 .setSaleValue(productModel.getSaleValue());
     }
 
-    public static ProductDTO productDtoToProductModel(ProductModel productModel){
+    public static ProductDTO productDtoToProductModel(ProductModel productModel){ // ?????????
         return new ProductDTO()
                 .setName(productModel.getName())
                 .setPurchasePrice(productModel.getPurchasePrice())
@@ -35,6 +35,7 @@ public final class ProductMapper {
                 .setDescription(productModel.getDescription())
                 .setCategory(CategoryMapper.categoryModelToCategoryDto(productModel.getCategory()))
                 .setFrequency(productModel.getFrequency())
+                .setImgLink(productModel.getImgLink())
                 .setId(productModel.getId());
     }
 
@@ -43,7 +44,8 @@ public final class ProductMapper {
                 .setName(productModel.getName())
                 .setDescription(productModel.getDescription())
                 .setPurchasePrice(productModel.getPurchasePrice())
-                .setSaleValue(productModel.getSaleValue());
+                .setSaleValue(productModel.getSaleValue())
+                .setImgLink(productModel.getImgLink());
     }
 
 }

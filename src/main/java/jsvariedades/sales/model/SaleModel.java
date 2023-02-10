@@ -25,8 +25,17 @@ public class SaleModel extends BaseModel {
     @ManyToOne
     private StoreModel store;
 
-    @OneToMany
+    @OneToMany // TODO FIX HERE
     private List<PaymentTypeModel> paymentTypes = new ArrayList<>();
+
+    public List<SaleItemModel> getItems() {
+        return items;
+    }
+
+    public SaleModel setItems(List<SaleItemModel> items) {
+        this.items = items;
+        return this;
+    }
 
     @OneToMany(mappedBy = "sale")
     private List<SaleItemModel> items = new ArrayList<>();
