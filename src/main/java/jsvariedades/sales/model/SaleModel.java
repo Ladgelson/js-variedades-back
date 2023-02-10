@@ -25,7 +25,7 @@ public class SaleModel extends BaseModel {
     @ManyToOne
     private StoreModel store;
 
-    @OneToMany // TODO FIX HERE
+    @ManyToMany // TODO FIX HERE
     private List<PaymentTypeModel> paymentTypes = new ArrayList<>();
 
     public List<SaleItemModel> getItems() {
