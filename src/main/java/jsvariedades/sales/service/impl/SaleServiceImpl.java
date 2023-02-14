@@ -72,6 +72,12 @@ public class SaleServiceImpl implements SaleService {
     @Transactional
     public void finishSale(Long id, FinishSaleRequest finishSaleRequest) {
         var sale = findByIdSale(id);
+        sale.getItems().forEach( item -> {
+            var product = item.getProduct();
+            var lastFrequency = product.getFrequency();
+            product.setFrequency(lastFrequency + item.getQuantity());
+        });
+
         var paymentTypes = paymentTypeRepository.findAll()
                 .stream()
                 .filter(paymentType -> finishSaleRequest.getPaymentTypes().contains(paymentType.getType().name()))

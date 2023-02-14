@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static jsvariedades.sales.controller.v1.ProductController.USER_ID;
 
@@ -25,7 +26,7 @@ public interface ProductService {
 
     Page<ProductResponse> findMostLikedPaginated(Pageable pageable);
 
-    Page<ProductResponse> findAllPaginated(Integer page, Integer linesPerPage, String orderBy, String direction);
+    Page<ProductResponse> findAllPaginated(int page, String name, Long categoryId, Boolean sortValueAsc, Boolean sortFrequency);
 
     ProductModel saveProduct(@RequestBody ProductModel product);
 }

@@ -23,7 +23,7 @@ public class ProductRequest {
     @NotNull(message = "StoreId is required when saving products")
     private Long storeId;
 
-    private Long catgoryId;
+    private Long category;
 
     public String getName() {
         return name;
@@ -79,12 +79,12 @@ public class ProductRequest {
         return this;
     }
 
-    public Long getCatgoryId() {
-        return catgoryId;
+    public Long getCategory() {
+        return category;
     }
 
-    public ProductRequest setCatgoryId(Long catgoryId) {
-        this.catgoryId = catgoryId;
+    public ProductRequest setCategory(Long category) {
+        this.category = category;
         return this;
     }
 
@@ -97,7 +97,7 @@ public class ProductRequest {
                 ", imgLink='" + imgLink + '\'' +
                 ", description='" + description + '\'' +
                 ", storeId=" + storeId +
-                ", catgoryId=" + catgoryId +
+                ", catgoryId=" + category +
                 '}';
     }
 }

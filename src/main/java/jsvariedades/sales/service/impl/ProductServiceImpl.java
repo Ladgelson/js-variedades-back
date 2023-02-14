@@ -1,5 +1,11 @@
 package jsvariedades.sales.service.impl;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import jsvariedades.sales.config.logging.LogExecution;
 import jsvariedades.sales.dto.response.ProductResponse;
 import jsvariedades.sales.mapper.ProductMapper;
@@ -11,39 +17,43 @@ import jsvariedades.sales.service.LikeService;
 import jsvariedades.sales.service.ProductService;
 import jsvariedades.sales.service.UserService;
 import org.hibernate.ObjectNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+//    @Autowired
+//    private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-    private final ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-    private final CategoryService categoryService;
+    @Autowired
+    private CategoryService categoryService;
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    private final LikeService likeService;
+    @Autowired
+    private LikeService likeService;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService, UserService userService, LikeService likeService) {
-        this.productRepository = productRepository;
-        this.categoryService = categoryService;
-        this.userService = userService;
-        this.likeService = likeService;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
+
+//    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService, UserService userService, LikeService likeService) {
+//        this.productRepository = productRepository;
+//        this.categoryService = categoryService;
+//        this.userService = userService;
+//        this.likeService = likeService;
+//    }
 
     @Override
     @LogExecution
     public ProductModel findById(Long id) {
         return productRepository.findById(id).orElseThrow( () -> {
-            logger.error("m=findById stage=error id={}", id);
+//            logger.error("m=findById stage=error id={}", id);
             return new ObjectNotFoundException("error", id);
         });
     }
@@ -80,10 +90,37 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @LogExecution
-    public Page<ProductResponse> findAllPaginated(Integer page, Integer linesPerPage, String orderBy, String direction) {
-        PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        return productRepository.findAll(pageRequest).map(ProductMapper::productModelToProductResponse);
+    public Page<ProductResponse> findAllPaginated(int page, String name, Long categoryId, Boolean sortValueAsc, Boolean sortFrequency) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ProductModel> query = cb.createQuery(ProductModel.class);
+        Root<ProductModel> product = query.from(ProductModel.class);
+        query.select(product);
+
+        if(name != null) {
+            query.where(cb.like(product.get("name"), "%" + name + "%"));
+        }
+        if(categoryId != null) {
+            product.join("category");
+        }
+        if(sortValueAsc != null) {
+            if(sortValueAsc) {
+                query.orderBy(cb.asc(product.get("saleValue")));
+            } else {
+                query.orderBy(cb.desc(product.get("saleValue")));
+            }
+        }
+        if(sortFrequency != null) {
+            if(sortFrequency) {
+                query.orderBy(cb.asc(product.get("frequency")));
+            } else {
+                query.orderBy(cb.desc(product.get("frequency")));
+            }
+        }
+        TypedQuery<ProductModel> typedQuery = entityManager.createQuery(query)
+                .setMaxResults(3)
+                .setFirstResult(page*3);
+        return new PageImpl<>(typedQuery.getResultList())
+                .map(ProductMapper::productModelToProductResponse);
     }
 
     @Override

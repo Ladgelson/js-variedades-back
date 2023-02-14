@@ -31,14 +31,9 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    @LogExecution
-    public ResponseEntity<Page<ProductResponse>> findAllPaginated(
-            Integer page,
-            Integer linesPerPage,
-            String orderBy,
-            String direction) {
-        var productsPage = productService.findAllPaginated(page,linesPerPage,orderBy,direction);
-        return ResponseEntity.ok(productsPage);
+    public ResponseEntity<Page<ProductResponse>> findAllPaginated(int page, String name, Long categoryId, Boolean sortValueAsc, Boolean sortFrequencyAsc) {
+        var res = productService.findAllPaginated(page, name, categoryId, sortValueAsc, sortFrequencyAsc);
+        return ResponseEntity.ok(res);
     }
 
     @Override

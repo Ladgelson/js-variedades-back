@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/v1/produts")
+@RequestMapping("/api/v1/products")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public interface ProductController {
 
@@ -19,10 +19,11 @@ public interface ProductController {
 
     @GetMapping
     ResponseEntity<Page<ProductResponse>> findAllPaginated(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction);
+            @RequestParam(defaultValue = "0", required = false) int page,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Boolean sortValueAsc,
+            @RequestParam(required = false) Boolean sortFrequency);
 
 //    @GetMapping
     ResponseEntity<Page<ProductResponse>> findMostLikedPaginated(Pageable pageable);
